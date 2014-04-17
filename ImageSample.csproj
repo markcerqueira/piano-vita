@@ -53,7 +53,6 @@
     <PsmMetadata Include="app.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sun.png" />
     <Content Include="notes\a\a2h.wav" />
     <Content Include="notes\a\a2s.wav" />
     <Content Include="notes\a\a3h.wav" />
@@ -126,8 +125,10 @@
     <Content Include="notes\g\g5s.wav" />
     <Content Include="notes\g\g6h.wav" />
     <Content Include="notes\g\g6s.wav" />
+    <Content Include="images\sun.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="notes\" />
+    <Folder Include="images\" />
   </ItemGroup>
 </Project>
