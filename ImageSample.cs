@@ -55,7 +55,7 @@ public static class ImageSample {
 		
         return true;
     }
-
+	
     public static void Term() {
         SampleDraw.Term();
 		
@@ -101,7 +101,7 @@ public static class ImageSample {
 			PianoNote newActivePianoNote = pianoNoteDictionary [time];
 			
 			newActivePianoNote.yPos = -100;
-			
+			newActivePianoNote.soundPlayer = soundPlayerForNote(newActivePianoNote.midiValue);
 			activeNoteList.Add (newActivePianoNote);
 			
 			pianoNoteDictionary.Remove (time);
@@ -159,7 +159,7 @@ public static class ImageSample {
 					activeNoteList.Remove (pianoNote);
 					
 					// play the note!
-					PlayNote(pianoNote.midiValue);
+					((SoundPlayer)pianoNote.soundPlayer).Play();
 			
 					removedNote = true;
 				}
@@ -182,12 +182,12 @@ public static class ImageSample {
 		}		
 	}
 	
-	public static void PlayNote(int note) {
+	public static SoundPlayer soundPlayerForNote(int note) {
 		int octave = (int) (note / 12.0);
 		int interval = (int) (note % 12.0);
-		//var note_filepath = notesarray[interval][2 * octave];
+		Console.Write("octave: " + octave + " interval: " + interval / 2 + "\n");
+		var note_filepath = notesarray[octave][interval / 2];
 			
-		//Console.Write("nigger: " + note_filepath);
-		//Sound thisSound = new Sound(note_filepath);		
+		return (new Sound(note_filepath)).CreatePlayer();
 	}
 }

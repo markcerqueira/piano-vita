@@ -1,5 +1,7 @@
 using System;
 
+using Sce.PlayStation.Core.Audio;
+
 using Sample;
 
 public class PianoNote {
@@ -11,6 +13,8 @@ public class PianoNote {
 	public SampleSprite sprite;
 	public String imageName;
 
+	public SoundPlayer soundPlayer;
+	
 	public PianoNote (int time, int midiValue) {
 		this.time = time;
 		this.midiValue = midiValue;
