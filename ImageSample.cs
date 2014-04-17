@@ -25,6 +25,9 @@ public static class ImageSample {
 	private static Dictionary<Int32, PianoNote> pianoNoteDictionary = new Dictionary<Int32, PianoNote>();
 	private static List<PianoNote> activeNoteList = new List<PianoNote>();
 	
+	private static SampleButton restartButton;
+	private static SampleButton trollButton;
+	
 	private static String[] notesA = Directory.GetFiles("/Application/notes/a/");
 	private static String[] notesB = Directory.GetFiles("/Application/notes/b/");
 	private static String[] notesC = Directory.GetFiles("/Application/notes/c/");
@@ -34,8 +37,14 @@ public static class ImageSample {
 	private static String[] notesG = Directory.GetFiles("/Application/notes/g/");
 	private static String[][] notesarray = new String[][] { notesC, notesD, notesE, notesF, notesG, notesA, notesB };
 	
-    static bool loop = true;
-
+    private static bool loop = true;
+	
+	private static bool trollModeEnabled = false;
+	private static bool isRestarting = false;
+	
+	private static int graphicsFrameWidth;
+	private static int graphicsFrameHeight;
+	
     public static void Main(string[] args) {
         Init();
 
@@ -51,15 +60,31 @@ public static class ImageSample {
     public static bool Init() {
         SampleDraw.Init(graphics);
 		
-		SongLoader.LoadDebugSong(pianoNoteDictionary, graphics);
+		LoadSong();
+		
+		graphicsFrameWidth = graphics.GetFrameBuffer().Width;
+		graphicsFrameHeight = graphics.GetFrameBuffer().Height;
+		
+		restartButton = new SampleButton(graphicsFrameWidth - 130, graphicsFrameHeight - 56, 120, 24); 
+		restartButton.SetText("restart");
+		
+		trollButton = new SampleButton(graphicsFrameWidth - 130, graphicsFrameHeight - 28, 120, 24);
+		trollButton.SetText("enable troll");
 		
         return true;
     }
 	
+	private static void LoadSong() {
+		pianoNoteDictionary.Clear();
+		activeNoteList.Clear();
+		
+		SongLoader.LoadDebugSong(pianoNoteDictionary, graphics);
+	}
+	
     public static void Term() {
         SampleDraw.Term();
 		
-		SongLoader.Term ();
+		SongLoader.Term();
 		
         graphics.Dispose();
     }
@@ -78,6 +103,11 @@ public static class ImageSample {
 		graphics.SetViewport (0, 0, graphics.GetFrameBuffer ().Width, graphics.GetFrameBuffer ().Height);
 		graphics.SetClearColor (0.0f, 0.0f, 0.0f, 0.0f);
 		graphics.Clear ();
+		
+		// if we're "restarting" stop here
+		if(isRestarting) {
+			return true;	
+		}
 		
 		// we will stop advancing time if there is a note waiting at the "pause horizon"
 		Boolean doAdvanceTime = true;
@@ -124,7 +154,10 @@ public static class ImageSample {
 		RemoveOffScreenNotes();	
 		
 		HandleTouchEvent();
-				
+			
+		restartButton.Draw();
+		trollButton.Draw();
+		
 		SampleDraw.DrawText ("Magic Piano Vita", 0xff00ff99, 0, 0);
 		SampleDraw.DrawText ("time = " + time, 0xff00ff99, 0, graphics.GetFrameBuffer().Height - 50);
 
@@ -133,8 +166,40 @@ public static class ImageSample {
 		return true;
 	}
 	
+	public static void RestartSong() {
+		isRestarting = true;
+		
+		LoadSong();
+		
+		time = 0;
+		isRestarting = false;
+	}
+	
 	public static void HandleTouchEvent() {
-		foreach (var touchData in Touch.GetData(0)) {
+		List<TouchData> touchDataList = Touch.GetData(0);
+		
+		// if restart button is touched
+		if (restartButton.TouchDown(touchDataList)) {
+        	RestartSong();
+			return;
+        }
+		
+		// if troll button is touched
+		if (trollButton.TouchDown(touchDataList)) {
+			if(trollModeEnabled) {
+				trollModeEnabled = false;
+				trollButton.SetText("enable troll");
+			} else {
+				trollModeEnabled = true;
+				trollButton.SetText("disable troll");
+			}
+			
+			// TODO refresh button sprites
+			
+			return;
+		}
+		
+		foreach (var touchData in touchDataList) {
 			// this boolean ensures we don't get multiple notes played per call to Render()
 			Boolean removedNote = false;
 			

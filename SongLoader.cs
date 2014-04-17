@@ -20,14 +20,14 @@ public class SongLoader {
     }
 	
 	public static void LoadDebugSong(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics) {
-		pianoNoteDictionary.Add(50, new PianoNote(50, 10));
-		pianoNoteDictionary.Add(100, new PianoNote(100, 40));
-		pianoNoteDictionary.Add(120, new PianoNote(120, 70));
-		pianoNoteDictionary.Add(130, new PianoNote(130, 100));
-		pianoNoteDictionary.Add(140, new PianoNote(140, 40));
-		pianoNoteDictionary.Add(150, new PianoNote(150, 60));
-		pianoNoteDictionary.Add(155, new PianoNote(155, 10));
-		pianoNoteDictionary.Add(160, new PianoNote(160, 80));
+		pianoNoteDictionary.Add(50, new PianoNote(50, 36));
+		pianoNoteDictionary.Add(100, new PianoNote(100, 44));
+		pianoNoteDictionary.Add(120, new PianoNote(120, 48));
+		pianoNoteDictionary.Add(130, new PianoNote(130, 52));
+		pianoNoteDictionary.Add(140, new PianoNote(140, 60));
+		pianoNoteDictionary.Add(150, new PianoNote(150, 70));
+		pianoNoteDictionary.Add(155, new PianoNote(155, 75));
+		pianoNoteDictionary.Add(160, new PianoNote(160, 82));
 		
 		FinishLoadingSongProcess(pianoNoteDictionary, graphics);
 	}
