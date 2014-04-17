@@ -11,10 +11,12 @@ using Sce.PlayStation.Core.Graphics;
 using Sce.PlayStation.Core.Imaging;
 using Sce.PlayStation.Core.Environment;
 using Sce.PlayStation.Core.Input;
+using Sce.PlayStation.Core.Audio;
 
 using Sce.PlayStation.HighLevel.GameEngine2D;
 using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
+using System.IO;
 using Sample;
 
 public static class ImageSample {
@@ -24,6 +26,15 @@ public static class ImageSample {
     private static List<SampleSprite> spriteList;
 	private static Dictionary<Int32, PianoNote> pianoNoteDictionary;
 	private static List<PianoNote> activeNoteList;
+	
+	private static String[] notesA = Directory.GetFiles("/Application/notes/a/");
+	private static String[] notesB = Directory.GetFiles("/Application/notes/b/");
+	private static String[] notesC = Directory.GetFiles("/Application/notes/c/");
+	private static String[] notesD = Directory.GetFiles("/Application/notes/d/");
+	private static String[] notesE = Directory.GetFiles("/Application/notes/e/");
+	private static String[] notesF = Directory.GetFiles("/Application/notes/f/");
+	private static String[] notesG = Directory.GetFiles("/Application/notes/g/");
+	private static String[][] notesarray = new String[][] { notesC, notesD, notesE, notesF, notesG, notesA, notesB };
 	
     static bool loop = true;
 
@@ -178,8 +189,9 @@ public static class ImageSample {
 					// then remove it
 					activeNoteList.Remove (pianoNote);
 					
-					// TODO - play the audio!
-					
+					// play the note!
+					PlayNote(pianoNote.midiValue);
+			
 					removedNote = true;
 				}
 			}
@@ -191,5 +203,14 @@ public static class ImageSample {
 		graphics.SwapBuffers ();
 
 		return true;
+	}
+	
+	public static void PlayNote(int note) {
+		int octave = (int) (note / 12.0);
+		int interval = (int) (note % 12.0);
+		//var note_filepath = notesarray[interval][2 * octave];
+			
+		//Console.Write("nigger: " + note_filepath);
+		//Sound thisSound = new Sound(note_filepath);		
 	}
 }
