@@ -43,9 +43,6 @@
     <Compile Include="PianoNote.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sun.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="SampleLib\SampleLib.csproj">
       <Project>{DA12989D-8B5F-4844-A97A-278F6397CE1D}</Project>
       <Name>SampleLib</Name>
@@ -53,5 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <PsmMetadata Include="app.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sun.png" />
   </ItemGroup>
 </Project>

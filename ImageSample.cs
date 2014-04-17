@@ -89,7 +89,7 @@ public static class ImageSample {
 	private static int PAUSE_HORIZON = 300;
 	
 	public static Texture2D getFlare() {
-		var image = new Image("/Application/sun.jpg");
+		var image = new Image("/Application/sun.png");
         image.Decode();
 			
 		var texture = new Texture2D(image.Size.Width, image.Size.Height, false, PixelFormat.Rgba);
@@ -140,11 +140,12 @@ public static class ImageSample {
 			if (doAdvanceTime) {	
 				pianoNote.yPos += SPEED;
 			}
-			int xPosNormalized = (int)(((float)pianoNote.midiValue / 127.0f) * graphics.GetFrameBuffer ().Width);
-						
+			int xPosNormalized = (int)(((float)pianoNote.midiValue / 127.0f) * graphics.GetFrameBuffer().Width);
+									
+			SampleDraw.DrawText ("yPos of note " + i + " = " + pianoNote.yPos, 0xff00ff99, 0, 50 + i * 30);
+			
 			SampleDraw.DrawSprite (new SampleSprite (getFlare (), xPosNormalized, pianoNote.yPos, 0f, 0.2f));
 			
-			SampleDraw.DrawText ("yPos of note " + i + " = " + pianoNote.yPos, 0xff00ff99, 0, 50 + i * 30);
 			i++;
 		}
 		
@@ -184,7 +185,8 @@ public static class ImageSample {
 			}
 		}
 		
-		SampleDraw.DrawText ("time = " + time, 0xff00ff99, 0, 0);
+		SampleDraw.DrawText ("Magic Piano Vita", 0xff00ff99, 0, 0);
+		SampleDraw.DrawText ("time = " + time, 0xff00ff99, 0, graphics.GetFrameBuffer().Height - 50);
 
 		graphics.SwapBuffers ();
 
