@@ -15,6 +15,8 @@ public class SongLoader {
 	private static String[] trollImageList = Directory.GetFiles("/Application/images/troll/");
 	
 	private readonly static float IMAGE_SCALE = 0.4f;
+
+	private static int ticksperbeat = 50;
 	
 	public SongLoader () {
 			
@@ -39,6 +41,20 @@ public class SongLoader {
 		FinishLoadingSongProcess(pianoNoteDictionary, graphics, trollModeEnabled);
 	}
 	
+	public static void LoadZeldaTheme(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {
+		
+		pianoNoteDictionary.Add(ticksperbeat, new PianoNote(ticksperbeat, 60)); 
+		pianoNoteDictionary.Add(ticksForBeat(2), new PianoNote(ticksForBeat(2), 55));
+		pianoNoteDictionary.Add(ticksForBeat(3.5), new PianoNote(ticksForBeat(3.5), 60));
+		pianoNoteDictionary.Add(ticksForBeat(4), new PianoNote(ticksForBeat(4), 60));
+		pianoNoteDictionary.Add(ticksForBeat(4.25), new PianoNote(ticksForBeat(4.25), 62));
+		pianoNoteDictionary.Add(ticksForBeat(4.5), new PianoNote(ticksForBeat(4.5), 64));
+		pianoNoteDictionary.Add(ticksForBeat(4.75), new PianoNote(ticksForBeat(4.75), 65));
+		pianoNoteDictionary.Add(ticksForBeat(5), new PianoNote(ticksForBeat(5), 67));
+		
+		FinishLoadingSongProcess(pianoNoteDictionary, graphics, trollModeEnabled);
+	}
+	
 	public static void PreloadTextures() {
 		textureMap.Clear();
 		
@@ -57,6 +73,10 @@ public class SongLoader {
 		preloadedTextureCount++;
 		
 		Console.Write("PreloadTextures - preloaded " + preloadedTextureCount + " textures.\n");
+	}
+	
+	public static int ticksForBeat(double beat) {
+		return (int)(ticksperbeat * beat);
 	}
 	
 	private static void FinishLoadingSongProcess(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {		
