@@ -60,8 +60,10 @@ public static class ImageSample {
     public static bool Init() {
         SampleDraw.Init(graphics);
 		
+		SongLoader.PreloadTextures();
+
 		LoadSong();
-		
+				
 		graphicsFrameWidth = graphics.GetFrameBuffer().Width;
 		graphicsFrameHeight = graphics.GetFrameBuffer().Height;
 		
