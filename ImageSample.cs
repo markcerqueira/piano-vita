@@ -102,9 +102,7 @@ public static class ImageSample {
 			
 			newActivePianoNote.yPos = -100;
 			newActivePianoNote.soundPlayer = soundPlayerForNote(newActivePianoNote.midiValue);
-			activeNoteList.Add (newActivePianoNote);
-			
-			pianoNoteDictionary.Remove (time);
+			activeNoteList.Add (newActivePianoNote);			
 		}
 		
 		int i = 0;
