@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="ImageSample.cs" />
     <Compile Include="PianoNote.cs" />
+    <Compile Include="SongLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="SampleLib\SampleLib.csproj">

@@ -48,21 +48,10 @@ public static class ImageSample {
 		pianoNoteDictionary = new Dictionary<Int32, PianoNote>();
 		activeNoteList = new List<PianoNote>();
 		
-		loadSong();
+		SongLoader.LoadDebugSong(pianoNoteDictionary);
 		
         return true;
     }
-	
-	public static void loadSong() {
-		pianoNoteDictionary.Add(50, new PianoNote(50, 10));
-		pianoNoteDictionary.Add(100, new PianoNote(100, 40));
-		pianoNoteDictionary.Add(120, new PianoNote(120, 70));
-		pianoNoteDictionary.Add(130, new PianoNote(130, 100));
-		pianoNoteDictionary.Add(140, new PianoNote(140, 40));
-		pianoNoteDictionary.Add(150, new PianoNote(150, 60));
-		pianoNoteDictionary.Add(155, new PianoNote(155, 10));
-		pianoNoteDictionary.Add(160, new PianoNote(160, 80));
-	}
 
     public static void Term() {
         foreach (var texture in textureList) {
@@ -85,7 +74,6 @@ public static class ImageSample {
 			
 	private static int time = 0;
 	private static int SPEED = 2;
-	private static int BOTTOM_OF_SCREEN = 600;			
 	private static int PAUSE_HORIZON = 300;
 	
 	public static Texture2D getFlare() {
@@ -140,6 +128,7 @@ public static class ImageSample {
 			if (doAdvanceTime) {	
 				pianoNote.yPos += SPEED;
 			}
+			
 			int xPosNormalized = (int)(((float)pianoNote.midiValue / 127.0f) * graphics.GetFrameBuffer().Width);
 									
 			SampleDraw.DrawText ("yPos of note " + i + " = " + pianoNote.yPos, 0xff00ff99, 0, 50 + i * 30);
@@ -149,16 +138,7 @@ public static class ImageSample {
 			i++;
 		}
 		
-		// remove off-screen notes
-		List<PianoNote> notesToRemove = new List<PianoNote> ();
-		foreach (PianoNote pianoNote in activeNoteList) {
-			if (pianoNote.yPos > BOTTOM_OF_SCREEN) {
-				notesToRemove.Add (pianoNote);
-			}
-		}
-		foreach (PianoNote pianoNote in notesToRemove) {
-			activeNoteList.Remove (pianoNote);
-		}		
+		RemoveOffScreenNotes();	
 		
 		// grab touches
 		foreach (var touchData in Touch.GetData(0)) {
@@ -191,5 +171,20 @@ public static class ImageSample {
 		graphics.SwapBuffers ();
 
 		return true;
+	}
+	
+	public static void RemoveOffScreenNotes() {
+		int BOTTOM_OF_SCREEN = 600;			
+		
+		List<PianoNote> notesToRemove = new List<PianoNote> ();
+		foreach (PianoNote pianoNote in activeNoteList) {
+			if (pianoNote.yPos > BOTTOM_OF_SCREEN) {
+				notesToRemove.Add (pianoNote);
+			}
+		}
+		
+		foreach (PianoNote pianoNote in notesToRemove) {
+			activeNoteList.Remove (pianoNote);
+		}		
 	}
 }
