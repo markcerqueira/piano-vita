@@ -86,6 +86,7 @@ public static class ImageSample {
 	private static int time = 0;
 	private static int SPEED = 2;
 	private static int BOTTOM_OF_SCREEN = 600;			
+	private static int PAUSE_HORIZON = 300;
 	
 	public static Texture2D getFlare() {
 		var image = new Image("/Application/sun.jpg");
@@ -99,78 +100,94 @@ public static class ImageSample {
 		return texture;
 	}
 		
-    public static bool Render() {
-        graphics.SetViewport(0, 0, graphics.GetFrameBuffer().Width, graphics.GetFrameBuffer().Height);
-        graphics.SetClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        graphics.Clear();
+	public static bool Render () {
+		graphics.SetViewport (0, 0, graphics.GetFrameBuffer ().Width, graphics.GetFrameBuffer ().Height);
+		graphics.SetClearColor (0.0f, 0.0f, 0.0f, 0.0f);
+		graphics.Clear ();
 		
-		time++;
+		// we will stop advancing time if there is a note waiting at the "pause horizon"
+		Boolean doAdvanceTime = true;
+		
+		// if a note has reached the near-bottom area of the screen, stop advancing notes
+		if (activeNoteList.Count > 0) {
+			PianoNote pianoNote = activeNoteList [0];
+			
+			if (pianoNote.yPos >= PAUSE_HORIZON) {
+				doAdvanceTime = false;
+			}
+		}
+		
+		// if the user needs to play a note, we will not advance time
+		if (doAdvanceTime) {
+			time++;
+		}
 		
 		// pull a note out into the active list if it's the proper time
-		if(pianoNoteDictionary.ContainsKey(time)) {
-			PianoNote newActivePianoNote = pianoNoteDictionary[time];
+		if (pianoNoteDictionary.ContainsKey (time)) {
+			PianoNote newActivePianoNote = pianoNoteDictionary [time];
 			
 			newActivePianoNote.yPos = -100;
 			
-			activeNoteList.Add(newActivePianoNote);
+			activeNoteList.Add (newActivePianoNote);
 			
-			pianoNoteDictionary.Remove(time);
+			pianoNoteDictionary.Remove (time);
 		}
 		
 		int i = 0;
 		
 		// move each active piano note down the screen
-		foreach(PianoNote pianoNote in activeNoteList) {
-			pianoNote.yPos += SPEED;
-			
-			int xPosNormalized = (int)(((float)pianoNote.midiValue/127.0f) * graphics.GetFrameBuffer().Width);
+		foreach (PianoNote pianoNote in activeNoteList) {
+			if (doAdvanceTime) {	
+				pianoNote.yPos += SPEED;
+			}
+			int xPosNormalized = (int)(((float)pianoNote.midiValue / 127.0f) * graphics.GetFrameBuffer ().Width);
 						
-			SampleDraw.DrawSprite(new SampleSprite(getFlare(), xPosNormalized, pianoNote.yPos, 0f, 0.2f));
+			SampleDraw.DrawSprite (new SampleSprite (getFlare (), xPosNormalized, pianoNote.yPos, 0f, 0.2f));
 			
-			SampleDraw.DrawText("yPos of active note " + i + " = " + pianoNote.yPos, 0xffff00ff, 0, 50 + i * 50);
+			SampleDraw.DrawText ("yPos of note " + i + " = " + pianoNote.yPos, 0xff00ff99, 0, 50 + i * 30);
 			i++;
 		}
 		
 		// remove off-screen notes
-   		List<PianoNote> notesToRemove = new List<PianoNote>();
+		List<PianoNote> notesToRemove = new List<PianoNote> ();
 		foreach (PianoNote pianoNote in activeNoteList) {
 			if (pianoNote.yPos > BOTTOM_OF_SCREEN) {
-				notesToRemove.Add(pianoNote);
+				notesToRemove.Add (pianoNote);
 			}
 		}
 		foreach (PianoNote pianoNote in notesToRemove) {
-			activeNoteList.Remove(pianoNote);
-		}
+			activeNoteList.Remove (pianoNote);
+		}		
 		
 		// grab touches
 		foreach (var touchData in Touch.GetData(0)) {
 			Boolean removedNote = false;
 			
-            if (touchData.Status == TouchStatus.Down) {
-                int pointX = (int)((touchData.X + 0.5f) * SampleDraw.Width);
-                int pointY = (int)((touchData.Y + 0.5f) * SampleDraw.Height);
+			if (touchData.Status == TouchStatus.Down) {
+				int pointX = (int)((touchData.X + 0.5f) * SampleDraw.Width);
+				int pointY = (int)((touchData.Y + 0.5f) * SampleDraw.Height);
 
-                SampleDraw.FillCircle(0xffff0000, pointX, pointY, 10);
+				SampleDraw.FillCircle (0xff00ff99, pointX, pointY, 10);
 				
 				// are there any active notes?
-				if(removedNote == false && activeNoteList.Count > 0) {
+				if (removedNote == false && activeNoteList.Count > 0) {
 					// grab the most recent note
-					PianoNote pianoNote = activeNoteList[0];
+					PianoNote pianoNote = activeNoteList [0];
 					
 					// then remove it
-					activeNoteList.Remove(pianoNote);
+					activeNoteList.Remove (pianoNote);
 					
 					// TODO - play the audio!
 					
 					removedNote = true;
 				}
-            }
-        }
+			}
+		}
 		
-        SampleDraw.DrawText("time = " + time, 0xffff00ff, 0, 0);
+		SampleDraw.DrawText ("time = " + time, 0xff00ff99, 0, 0);
 
-        graphics.SwapBuffers();
+		graphics.SwapBuffers ();
 
-        return true;
-    }
+		return true;
+	}
 }
