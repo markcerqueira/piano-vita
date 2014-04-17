@@ -20,12 +20,10 @@ using System.IO;
 using Sample;
 
 public static class ImageSample {
-    private static GraphicsContext graphics;
+    private static GraphicsContext graphics = new GraphicsContext();
 	
-    private static List<Texture2D> textureList;
-    private static List<SampleSprite> spriteList;
-	private static Dictionary<Int32, PianoNote> pianoNoteDictionary;
-	private static List<PianoNote> activeNoteList;
+	private static Dictionary<Int32, PianoNote> pianoNoteDictionary = new Dictionary<Int32, PianoNote>();
+	private static List<PianoNote> activeNoteList = new List<PianoNote>();
 	
 	private static String[] notesA = Directory.GetFiles("/Application/notes/a/");
 	private static String[] notesB = Directory.GetFiles("/Application/notes/b/");
@@ -51,29 +49,18 @@ public static class ImageSample {
     }
 
     public static bool Init() {
-        graphics = new GraphicsContext();
         SampleDraw.Init(graphics);
-
-        textureList = new List<Texture2D>();
-        spriteList = new List<SampleSprite>();
-		pianoNoteDictionary = new Dictionary<Int32, PianoNote>();
-		activeNoteList = new List<PianoNote>();
 		
-		SongLoader.LoadDebugSong(pianoNoteDictionary);
+		SongLoader.LoadDebugSong(pianoNoteDictionary, graphics);
 		
         return true;
     }
 
     public static void Term() {
-        foreach (var texture in textureList) {
-            texture.Dispose();
-        }
-
-        foreach (var sprite in spriteList) {
-            sprite.Dispose();
-        }
-
         SampleDraw.Term();
+		
+		SongLoader.Term ();
+		
         graphics.Dispose();
     }
 
@@ -86,18 +73,6 @@ public static class ImageSample {
 	private static int time = 0;
 	private static int SPEED = 2;
 	private static int PAUSE_HORIZON = 300;
-	
-	public static Texture2D getFlare() {
-		var image = new Image("/Application/sun.png");
-        image.Decode();
-			
-		var texture = new Texture2D(image.Size.Width, image.Size.Height, false, PixelFormat.Rgba);
-        texture.SetPixels(0, image.ToBuffer());
-			
-        image.Dispose();
-			
-		return texture;
-	}
 		
 	public static bool Render () {
 		graphics.SetViewport (0, 0, graphics.GetFrameBuffer ().Width, graphics.GetFrameBuffer ().Height);
@@ -139,34 +114,48 @@ public static class ImageSample {
 			if (doAdvanceTime) {	
 				pianoNote.yPos += SPEED;
 			}
+					
+			pianoNote.sprite.PositionY = pianoNote.yPos;
 			
-			int xPosNormalized = (int)(((float)pianoNote.midiValue / 127.0f) * graphics.GetFrameBuffer().Width);
-									
 			SampleDraw.DrawText ("yPos of note " + i + " = " + pianoNote.yPos, 0xff00ff99, 0, 50 + i * 30);
-			
-			SampleDraw.DrawSprite (new SampleSprite (getFlare (), xPosNormalized, pianoNote.yPos, 0f, 0.2f));
+			SampleDraw.DrawSprite(pianoNote.sprite);
 			
 			i++;
 		}
 		
 		RemoveOffScreenNotes();	
 		
-		// grab touches
+		HandleTouchEvent();
+				
+		SampleDraw.DrawText ("Magic Piano Vita", 0xff00ff99, 0, 0);
+		SampleDraw.DrawText ("time = " + time, 0xff00ff99, 0, graphics.GetFrameBuffer().Height - 50);
+
+		graphics.SwapBuffers ();
+
+		return true;
+	}
+	
+	public static void HandleTouchEvent() {
 		foreach (var touchData in Touch.GetData(0)) {
+			// this boolean ensures we don't get multiple notes played per call to Render()
 			Boolean removedNote = false;
 			
 			if (touchData.Status == TouchStatus.Down) {
 				int pointX = (int)((touchData.X + 0.5f) * SampleDraw.Width);
 				int pointY = (int)((touchData.Y + 0.5f) * SampleDraw.Height);
 
-				SampleDraw.FillCircle (0xff00ff99, pointX, pointY, 10);
+				SampleDraw.FillCircle (0xff00ff99, pointX, pointY, 4);
 				
 				// are there any active notes?
 				if (removedNote == false && activeNoteList.Count > 0) {
 					// grab the most recent note
-					PianoNote pianoNote = activeNoteList [0];
+					PianoNote pianoNote = activeNoteList[0];
 					
-					// then remove it
+					float deltaXPercentage = (float)(pointX - pianoNote.xPos)/(graphics.GetFrameBuffer().Width);
+					
+					Console.Write("Delta from touch to pianoNote render x position: " + deltaXPercentage + "\n");
+					
+					// then remove it from active note list
 					activeNoteList.Remove (pianoNote);
 					
 					// play the note!
@@ -176,13 +165,6 @@ public static class ImageSample {
 				}
 			}
 		}
-		
-		SampleDraw.DrawText ("Magic Piano Vita", 0xff00ff99, 0, 0);
-		SampleDraw.DrawText ("time = " + time, 0xff00ff99, 0, graphics.GetFrameBuffer().Height - 50);
-
-		graphics.SwapBuffers ();
-
-		return true;
 	}
 	
 	public static void RemoveOffScreenNotes() {
