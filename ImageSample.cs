@@ -65,14 +65,14 @@ public static class ImageSample {
     }
 	
 	public static void loadSong() {
-		pianoNoteDictionary.Add(50, new PianoNote(50, 10));
-		pianoNoteDictionary.Add(100, new PianoNote(100, 40));
-		pianoNoteDictionary.Add(120, new PianoNote(120, 70));
-		pianoNoteDictionary.Add(130, new PianoNote(130, 100));
-		pianoNoteDictionary.Add(140, new PianoNote(140, 40));
-		pianoNoteDictionary.Add(150, new PianoNote(150, 60));
-		pianoNoteDictionary.Add(155, new PianoNote(155, 10));
-		pianoNoteDictionary.Add(160, new PianoNote(160, 80));
+		pianoNoteDictionary.Add(48, new PianoNote(48, 10));
+		pianoNoteDictionary.Add(50, new PianoNote(50, 40));
+		pianoNoteDictionary.Add(52, new PianoNote(52, 70));
+		pianoNoteDictionary.Add(54, new PianoNote(54, 54));
+		pianoNoteDictionary.Add(56, new PianoNote(56, 40));
+		pianoNoteDictionary.Add(58, new PianoNote(58, 60));
+		pianoNoteDictionary.Add(60, new PianoNote(60, 10));
+		pianoNoteDictionary.Add(62, new PianoNote(62, 80));
 	}
 
     public static void Term() {
@@ -138,7 +138,7 @@ public static class ImageSample {
 			PianoNote newActivePianoNote = pianoNoteDictionary [time];
 			
 			newActivePianoNote.yPos = -100;
-			
+			newActivePianoNote.soundPlayer = soundPlayerForNote(newActivePianoNote.midiValue);
 			activeNoteList.Add (newActivePianoNote);
 			
 			pianoNoteDictionary.Remove (time);
@@ -190,7 +190,7 @@ public static class ImageSample {
 					activeNoteList.Remove (pianoNote);
 					
 					// play the note!
-					PlayNote(pianoNote.midiValue);
+					((SoundPlayer)pianoNote.soundPlayer).Play();
 			
 					removedNote = true;
 				}
@@ -205,12 +205,12 @@ public static class ImageSample {
 		return true;
 	}
 	
-	public static void PlayNote(int note) {
+	public static SoundPlayer soundPlayerForNote(int note) {
 		int octave = (int) (note / 12.0);
 		int interval = (int) (note % 12.0);
-		//var note_filepath = notesarray[interval][2 * octave];
+		Console.Write("octave: " + octave + " interval: " + interval / 2 + "\n");
+		var note_filepath = notesarray[octave][interval / 2];
 			
-		//Console.Write("nigger: " + note_filepath);
-		//Sound thisSound = new Sound(note_filepath);		
+		return (new Sound(note_filepath)).CreatePlayer();
 	}
 }
