@@ -78,7 +78,11 @@ public static class ImageSample {
 		pianoNoteDictionary.Clear();
 		activeNoteList.Clear();
 		
-		SongLoader.LoadDebugSong(pianoNoteDictionary, graphics);
+		SongLoader.LoadDebugSong(pianoNoteDictionary, graphics, trollModeEnabled);
+	}
+	
+	private static void RefreshPianoNoteSprites() {
+		SongLoader.RefreshPianoNoteSprites(pianoNoteDictionary, graphics, trollModeEnabled);	
 	}
 	
     public static void Term() {
@@ -181,6 +185,7 @@ public static class ImageSample {
 		// if restart button is touched
 		if (restartButton.TouchDown(touchDataList)) {
         	RestartSong();
+			
 			return;
         }
 		
@@ -194,7 +199,8 @@ public static class ImageSample {
 				trollButton.SetText("disable troll");
 			}
 			
-			// TODO refresh button sprites
+			// refreshes button sprites so images update
+			RefreshPianoNoteSprites();
 			
 			return;
 		}

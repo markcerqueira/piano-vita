@@ -126,6 +126,7 @@
     <Content Include="notes\g\g6h.wav" />
     <Content Include="notes\g\g6s.wav" />
     <Content Include="images\sun.png" />
+    <Content Include="images\sun-troll.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="notes\" />

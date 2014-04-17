@@ -19,7 +19,7 @@ public class SongLoader {
         }		
     }
 	
-	public static void LoadDebugSong(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics) {
+	public static void LoadDebugSong(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {
 		pianoNoteDictionary.Add(50, new PianoNote(50, 36));
 		pianoNoteDictionary.Add(100, new PianoNote(100, 44));
 		pianoNoteDictionary.Add(120, new PianoNote(120, 48));
@@ -29,26 +29,40 @@ public class SongLoader {
 		pianoNoteDictionary.Add(155, new PianoNote(155, 75));
 		pianoNoteDictionary.Add(160, new PianoNote(160, 82));
 		
-		FinishLoadingSongProcess(pianoNoteDictionary, graphics);
+		FinishLoadingSongProcess(pianoNoteDictionary, graphics, trollModeEnabled);
 	}
 	
-	private static void FinishLoadingSongProcess(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics) {		
+	private static void FinishLoadingSongProcess(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {		
 		foreach(PianoNote pianoNote in pianoNoteDictionary.Values) {
 			// calculate all x position values now
 			float graphicsFrameWidth = graphics.GetFrameBuffer().Width;
 			pianoNote.xPos = (int)(((float)pianoNote.midiValue / 127.0f) * graphicsFrameWidth);
 			
 			// create sprites
-			pianoNote.sprite = new SampleSprite(GetPianoNoteTexture(pianoNote), pianoNote.xPos, pianoNote.yPos, 0f, 0.2f);
+			RefreshPianoNoteSprites(pianoNoteDictionary, graphics, trollModeEnabled);
 		}
 	}
 	
-	public static Texture2D GetPianoNoteTexture(PianoNote pianoNote) {
-		if(textureMap.ContainsKey(pianoNote.imageName)) {
-			return textureMap[pianoNote.imageName];	
+	public static void RefreshPianoNoteSprites(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {
+		foreach(PianoNote pianoNote in pianoNoteDictionary.Values) {
+			pianoNote.sprite = new SampleSprite(GetPianoNoteTexture(pianoNote, trollModeEnabled), pianoNote.xPos, pianoNote.yPos, 0f, 0.2f);
+		}
+	}
+	
+	private static Texture2D GetPianoNoteTexture(PianoNote pianoNote, bool trollModeEnabled) {
+		String imageName;
+		
+		if(trollModeEnabled) {
+			imageName = "images/sun-troll.png";
+		} else {
+			imageName = "images/sun.png";
 		}
 		
-		var image = new Image("/Application/" + pianoNote.imageName);
+		if(textureMap.ContainsKey(imageName)) {
+			return textureMap[imageName];	
+		}
+		
+		var image = new Image("/Application/" + imageName);
         image.Decode();
 			
 		var texture = new Texture2D(image.Size.Width, image.Size.Height, false, PixelFormat.Rgba);
@@ -56,7 +70,7 @@ public class SongLoader {
 			
         image.Dispose();
 		
-		textureMap[pianoNote.imageName] = texture;
+		textureMap[imageName] = texture;
 			
 		return texture;
 	}
