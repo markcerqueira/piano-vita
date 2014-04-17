@@ -25,14 +25,19 @@ public static class ImageSample {
 	private static Dictionary<Int32, PianoNote> pianoNoteDictionary = new Dictionary<Int32, PianoNote>();
 	private static List<PianoNote> activeNoteList = new List<PianoNote>();
 	
-	private static String[] notesA = Directory.GetFiles("/Application/notes/a/");
-	private static String[] notesB = Directory.GetFiles("/Application/notes/b/");
-	private static String[] notesC = Directory.GetFiles("/Application/notes/c/");
-	private static String[] notesD = Directory.GetFiles("/Application/notes/d/");
-	private static String[] notesE = Directory.GetFiles("/Application/notes/e/");
-	private static String[] notesF = Directory.GetFiles("/Application/notes/f/");
-	private static String[] notesG = Directory.GetFiles("/Application/notes/g/");
-	private static String[][] notesarray = new String[][] { notesC, notesD, notesE, notesF, notesG, notesA, notesB };
+	private static String[][] notesarray = new String[][] { 
+		Directory.GetFiles("/Application/notes/c/"),
+		Directory.GetFiles("/Application/notes/csharp/"),
+		Directory.GetFiles("/Application/notes/d/"),
+		Directory.GetFiles("/Application/notes/dsharp/"),
+		Directory.GetFiles("/Application/notes/e/"),
+		Directory.GetFiles("/Application/notes/f/"),
+		Directory.GetFiles("/Application/notes/fsharp/"),
+		Directory.GetFiles("/Application/notes/g/"),
+		Directory.GetFiles("/Application/notes/gsharp/"),
+		Directory.GetFiles("/Application/notes/a/"),
+		Directory.GetFiles("/Application/notes/asharp/"),
+		Directory.GetFiles("/Application/notes/b/")};
 	
     static bool loop = true;
 
@@ -51,7 +56,7 @@ public static class ImageSample {
     public static bool Init() {
         SampleDraw.Init(graphics);
 		
-		SongLoader.LoadDebugSong(pianoNoteDictionary, graphics);
+		SongLoader.LoadZeldaTheme(pianoNoteDictionary, graphics);
 		
         return true;
     }
@@ -184,7 +189,7 @@ public static class ImageSample {
 		int octave = (int) (note / 12.0);
 		int interval = (int) (note % 12.0);
 		Console.Write("octave: " + octave + " interval: " + interval / 2 + "\n");
-		var note_filepath = notesarray[octave][interval / 2];
+		var note_filepath = notesarray[interval][octave - 2];
 			
 		return (new Sound(note_filepath)).CreatePlayer();
 	}

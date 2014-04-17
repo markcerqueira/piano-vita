@@ -8,7 +8,8 @@ using Sample;
 
 public class SongLoader {
     private static Dictionary<String, Texture2D> textureMap = new Dictionary<String, Texture2D>();
-	
+	private static int ticksperbeat = 50;
+		
 	public SongLoader () {
 			
 	}
@@ -30,6 +31,24 @@ public class SongLoader {
 		pianoNoteDictionary.Add(160, new PianoNote(160, 80));
 		
 		FinishLoadingSongProcess(pianoNoteDictionary, graphics);
+	}
+	
+	public static void LoadZeldaTheme(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics) {
+		
+		pianoNoteDictionary.Add(ticksperbeat, new PianoNote(ticksperbeat, 60)); 
+		pianoNoteDictionary.Add(ticksForBeat(2), new PianoNote(ticksForBeat(2), 55));
+		pianoNoteDictionary.Add(ticksForBeat(3.5), new PianoNote(ticksForBeat(3.5), 60));
+		pianoNoteDictionary.Add(ticksForBeat(4), new PianoNote(ticksForBeat(4), 60));
+		pianoNoteDictionary.Add(ticksForBeat(4.25), new PianoNote(ticksForBeat(4.25), 62));
+		pianoNoteDictionary.Add(ticksForBeat(4.5), new PianoNote(ticksForBeat(4.5), 64));
+		pianoNoteDictionary.Add(ticksForBeat(4.75), new PianoNote(ticksForBeat(4.75), 65));
+		pianoNoteDictionary.Add(ticksForBeat(5), new PianoNote(ticksForBeat(5), 67));
+		
+		FinishLoadingSongProcess(pianoNoteDictionary, graphics);
+	}
+	
+	public static int ticksForBeat(double beat) {
+		return (int)(ticksperbeat * beat);
 	}
 	
 	private static void FinishLoadingSongProcess(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics) {		
