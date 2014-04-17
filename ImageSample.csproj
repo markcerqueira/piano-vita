@@ -126,10 +126,15 @@
     <Content Include="notes\g\g6h.wav" />
     <Content Include="notes\g\g6s.wav" />
     <Content Include="images\sun.png" />
-    <Content Include="images\sun-troll.png" />
+    <Content Include="images\troll\Face_Ben.png" />
+    <Content Include="images\troll\Face_Josh.png" />
+    <Content Include="images\troll\Face_Mark.png" />
+    <Content Include="images\troll\Face_Mo.png" />
+    <Content Include="images\troll\Face_Oscar.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="notes\" />
     <Folder Include="images\" />
+    <Folder Include="images\troll\" />
   </ItemGroup>
 </Project>

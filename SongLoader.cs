@@ -5,9 +5,16 @@ using Sce.PlayStation.Core.Imaging;
 using Sce.PlayStation.Core.Graphics;
 
 using Sample;
+using System.IO;
 
 public class SongLoader {
     private static Dictionary<String, Texture2D> textureMap = new Dictionary<String, Texture2D>();
+	
+	private static Random randomNumberGenerator = new Random((int)DateTime.Now.Ticks);
+	
+	private static String[] trollImageList = Directory.GetFiles("/Application/images/troll/");
+	
+	private readonly static float IMAGE_SCALE = 0.4f;
 	
 	public SongLoader () {
 			
@@ -32,6 +39,26 @@ public class SongLoader {
 		FinishLoadingSongProcess(pianoNoteDictionary, graphics, trollModeEnabled);
 	}
 	
+	public static void PreloadTextures() {
+		textureMap.Clear();
+		
+		int preloadedTextureCount = 0;
+		foreach(String trollImageName in trollImageList) {
+			if(textureMap.ContainsKey(trollImageName)) {
+				Console.Write("PreloadTextures - texture map already contains texture for image with name: " + trollImageName + "\n");
+				continue;
+			}
+			
+			textureMap.Add(trollImageName, LoadTexture(trollImageName));
+			preloadedTextureCount++;
+		}
+		
+		textureMap.Add("/Application/images/sun.png", LoadTexture("/Application/images/sun.png"));
+		preloadedTextureCount++;
+		
+		Console.Write("PreloadTextures - preloaded " + preloadedTextureCount + " textures.\n");
+	}
+	
 	private static void FinishLoadingSongProcess(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {		
 		foreach(PianoNote pianoNote in pianoNoteDictionary.Values) {
 			// calculate all x position values now
@@ -45,7 +72,7 @@ public class SongLoader {
 	
 	public static void RefreshPianoNoteSprites(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {
 		foreach(PianoNote pianoNote in pianoNoteDictionary.Values) {
-			pianoNote.sprite = new SampleSprite(GetPianoNoteTexture(pianoNote, trollModeEnabled), pianoNote.xPos, pianoNote.yPos, 0f, 0.2f);
+			pianoNote.sprite = new SampleSprite(GetPianoNoteTexture(pianoNote, trollModeEnabled), pianoNote.xPos, pianoNote.yPos, 0f, IMAGE_SCALE);
 		}
 	}
 	
@@ -53,25 +80,33 @@ public class SongLoader {
 		String imageName;
 		
 		if(trollModeEnabled) {
-			imageName = "images/sun-troll.png";
+			imageName = trollImageList[randomNumberGenerator.Next(0, trollImageList.Length)];
 		} else {
-			imageName = "images/sun.png";
+			imageName = "/Application/images/sun.png";
 		}
 		
 		if(textureMap.ContainsKey(imageName)) {
 			return textureMap[imageName];	
 		}
 		
-		var image = new Image("/Application/" + imageName);
+		Texture2D texture = LoadTexture(imageName);
+		
+		textureMap[imageName] = texture;
+			
+		return texture;
+	}
+	
+	private static Texture2D LoadTexture(String imageName) {
+		var image = new Image(imageName);
         image.Decode();
 			
+		Console.Write("LoadTexture - image name = " + imageName + "; height = " + image.Size.Height + "; width = " + image.Size.Width+ "\n");
+		
 		var texture = new Texture2D(image.Size.Width, image.Size.Height, false, PixelFormat.Rgba);
         texture.SetPixels(0, image.ToBuffer());
 			
         image.Dispose();
 		
-		textureMap[imageName] = texture;
-			
 		return texture;
 	}
 }

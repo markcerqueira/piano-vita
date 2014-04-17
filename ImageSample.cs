@@ -39,7 +39,7 @@ public static class ImageSample {
 	
     private static bool loop = true;
 	
-	private static bool trollModeEnabled = false;
+	private static bool trollModeEnabled = true;
 	private static bool isRestarting = false;
 	
 	private static int graphicsFrameWidth;
@@ -65,14 +65,26 @@ public static class ImageSample {
 		graphicsFrameWidth = graphics.GetFrameBuffer().Width;
 		graphicsFrameHeight = graphics.GetFrameBuffer().Height;
 		
-		restartButton = new SampleButton(graphicsFrameWidth - 130, graphicsFrameHeight - 56, 120, 24); 
+		int buttonHeight = 48;
+		int buttonWidth = 200;
+		
+		restartButton = new SampleButton(graphicsFrameWidth - buttonWidth - 10, graphicsFrameHeight - buttonHeight * 2 - 20, buttonWidth, buttonHeight); 
 		restartButton.SetText("restart");
 		
-		trollButton = new SampleButton(graphicsFrameWidth - 130, graphicsFrameHeight - 28, 120, 24);
-		trollButton.SetText("enable troll");
+		trollButton = new SampleButton(graphicsFrameWidth - buttonWidth - 10, graphicsFrameHeight - buttonHeight - 10, buttonWidth, buttonHeight);
+		
+		RefreshTrollButtonText();
 		
         return true;
     }
+	
+	private static void RefreshTrollButtonText() {
+		if(trollModeEnabled) {
+			trollButton.SetText("disable troll");
+		} else {
+			trollButton.SetText("enable troll");
+		}	
+	}
 	
 	private static void LoadSong() {
 		pianoNoteDictionary.Clear();
@@ -149,7 +161,7 @@ public static class ImageSample {
 					
 			pianoNote.sprite.PositionY = pianoNote.yPos;
 			
-			SampleDraw.DrawText ("yPos of note " + i + " = " + pianoNote.yPos, 0xff00ff99, 0, 50 + i * 30);
+			// SampleDraw.DrawText ("yPos of note " + i + " = " + pianoNote.yPos, 0xff00ff99, 0, 50 + i * 30);
 			SampleDraw.DrawSprite(pianoNote.sprite);
 			
 			i++;
@@ -193,11 +205,11 @@ public static class ImageSample {
 		if (trollButton.TouchDown(touchDataList)) {
 			if(trollModeEnabled) {
 				trollModeEnabled = false;
-				trollButton.SetText("enable troll");
 			} else {
 				trollModeEnabled = true;
-				trollButton.SetText("disable troll");
 			}
+			
+			RefreshTrollButtonText();
 			
 			// refreshes button sprites so images update
 			RefreshPianoNoteSprites();
