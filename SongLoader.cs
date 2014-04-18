@@ -65,10 +65,27 @@ public class SongLoader {
 	}
 	
 	private static void FinishLoadingSongProcess(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {		
+		int minNoteValue = 200;
+		int maxNoteValue = 0;
+		
+		foreach(PianoNote pianoNote in pianoNoteDictionary.Values) {
+			if(pianoNote.midiValue < minNoteValue) {
+				minNoteValue = pianoNote.midiValue;
+			}
+			
+			if(pianoNote.midiValue > maxNoteValue) {
+				maxNoteValue = pianoNote.midiValue;
+			}
+		}
+		
+		Console.Write("FinishLoadingSongProcess - min midi value = " + minNoteValue + "; max midi value = " + maxNoteValue + "\n");
+		
 		foreach(PianoNote pianoNote in pianoNoteDictionary.Values) {
 			// calculate all x position values now
 			float graphicsFrameWidth = graphics.GetFrameBuffer().Width;
 			pianoNote.xPos = (int)(((float)pianoNote.midiValue / 120.0f) * graphicsFrameWidth);
+			
+			Console.Write("FinishLoadingSongProcess - for midi value " + pianoNote.midiValue + " xPos is " + pianoNote.xPos + "\n");
 			
 			// create sprites
 			RefreshPianoNoteSprites(pianoNoteDictionary, graphics, trollModeEnabled);
