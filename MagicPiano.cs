@@ -33,7 +33,7 @@ public static class MagicPiano {
 	private static int graphicsFrameWidth;
 	private static int graphicsFrameHeight;
 	
-	private static bool trollModeEnabled = true;
+	private static bool trollModeEnabled = false;
 	
 	private static bool isRestarting = false;
 	
