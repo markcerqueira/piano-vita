@@ -192,7 +192,6 @@
     <Folder Include="songs\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="notes\.DS_Store" />
     <None Include="notes\a\.DS_Store" />
     <None Include="notes\asharp\.DS_Store" />
     <None Include="notes\c\.DS_Store" />
