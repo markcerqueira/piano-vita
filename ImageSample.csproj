@@ -42,6 +42,8 @@
     <Compile Include="ImageSample.cs" />
     <Compile Include="PianoNote.cs" />
     <Compile Include="SongLoader.cs" />
+    <Compile Include="songs\SongDebug.cs" />
+    <Compile Include="songs\SongZelda.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="SampleLib\SampleLib.csproj">
@@ -186,6 +188,7 @@
     <Folder Include="images\" />
     <Folder Include="notes\" />
     <Folder Include="trollnotes\" />
+    <Folder Include="songs\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="notes\.DS_Store" />

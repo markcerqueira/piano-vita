@@ -17,6 +17,7 @@ public class PianoNote {
 	public PianoNote (int time, int midiValue) {
 		this.time = time;
 		this.midiValue = midiValue;
+		this.yPos = -200;
 	}
 
 }

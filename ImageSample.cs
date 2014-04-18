@@ -169,7 +169,6 @@ public static class ImageSample {
 		if (pianoNoteDictionary.ContainsKey (time)) {
 			PianoNote newActivePianoNote = pianoNoteDictionary [time];
 			
-			newActivePianoNote.yPos = -100;
 			newActivePianoNote.soundPlayer = soundPlayerForNote(newActivePianoNote.midiValue);
 			activeNoteList.Add (newActivePianoNote);			
 		}
