@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSample", "ImageSample.csproj", "{741B8085-F498-4231-8F96-D3480CEF5C37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicPiano", "MagicPiano.csproj", "{741B8085-F498-4231-8F96-D3480CEF5C37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleLib", "SampleLib\SampleLib.csproj", "{DA12989D-8B5F-4844-A97A-278F6397CE1D}"
 EndProject
@@ -23,6 +23,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ImageSample.csproj
+		StartupItem = MagicPiano.csproj
 	EndGlobalSection
 EndGlobal
