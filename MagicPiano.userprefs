@@ -1,10 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="songs\SongFiddle.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SongLoader.cs">
     <Files>
-      <File FileName="MagicPiano.cs" Line="242" Column="25" />
-      <File FileName="SongLoader.cs" Line="35" Column="34" />
-      <File FileName="songs\SongFiddle.cs" Line="16" Column="7" />
+      <File FileName="MagicPiano.cs" Line="53" Column="12" />
+      <File FileName="SongLoader.cs" Line="108" Column="4" />
+      <File FileName="songs\SongFiddle.cs" Line="19" Column="26" />
+      <File FileName="PianoNote.cs" Line="12" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

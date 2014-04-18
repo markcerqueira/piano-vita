@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 public class SongZelda {
-	private readonly static int TICKS_PER_BEAT = 50;
+	private readonly static int TICKS_PER_BEAT = 25;
 	private readonly static int OCTAVE = 3;
 	private readonly static int KEYCHANGE = 0;
 	public SongZelda () {

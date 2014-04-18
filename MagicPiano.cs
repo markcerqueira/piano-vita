@@ -172,12 +172,12 @@ public static class MagicPiano {
 			
         image.Dispose();
 		
-		lineSprite = new SampleSprite(texture, 0, PAUSE_HORIZON + 100, 0f, 1.0f);
+		lineSprite = new SampleSprite(texture, 0, PAUSE_HORIZON, 0f, 1.0f);
 	}
 			
-	private static int time = 0;
-	private static int SPEED = 2;
-	private static int PAUSE_HORIZON = 300;
+	private static float time = 0.0f;
+	private static int SPEED = 8;
+	private static int PAUSE_HORIZON = 360;
 		
 	public static bool Render () {
 		graphics.SetViewport (0, 0, graphics.GetFrameBuffer ().Width, graphics.GetFrameBuffer ().Height);
@@ -205,31 +205,32 @@ public static class MagicPiano {
 		
 		// if the user needs to play a note, we will not advance time
 		if (doAdvanceTime) {
-			time++;
+			time += 0.5f;
 		}
 		
-		// pull a note out into the active list if it's the proper time
-		if (pianoNoteDictionary.ContainsKey (time)) {
-			PianoNote newActivePianoNote = pianoNoteDictionary [time];
+		bool doAdvanceNoteDown = false;
+		if (doAdvanceTime && time % 1.0f == 0) {
+			int intTime = (int)time;
+			doAdvanceNoteDown = true;
 			
-			newActivePianoNote.soundPlayer = soundPlayerForNote(newActivePianoNote.midiValue);
-			activeNoteList.Add (newActivePianoNote);			
+			// pull a note out into the active list if it's the proper time
+			if (pianoNoteDictionary.ContainsKey (intTime)) {
+				PianoNote newActivePianoNote = pianoNoteDictionary [intTime];
+			
+				newActivePianoNote.soundPlayer = soundPlayerForNote (newActivePianoNote.midiValue);
+				activeNoteList.Add (newActivePianoNote);			
+			}		
 		}
-		
-		int i = 0;
 		
 		// move each active piano note down the screen
 		foreach (PianoNote pianoNote in activeNoteList) {
-			if (doAdvanceTime) {	
+			if (doAdvanceTime && doAdvanceNoteDown) {	
 				pianoNote.yPos += SPEED;
 			}
 					
 			pianoNote.sprite.PositionY = pianoNote.yPos;
 			
-			// SampleDraw.DrawText ("yPos of note " + i + " = " + pianoNote.yPos, 0xff00ff99, 0, 50 + i * 30);
-			SampleDraw.DrawSprite(pianoNote.sprite);
-			
-			i++;
+			SampleDraw.DrawSprite (pianoNote.sprite);
 		}
 				
 		RemoveOffScreenNotes();	
@@ -241,7 +242,7 @@ public static class MagicPiano {
 		songSelectButton.Draw();
 		
 		SampleDraw.DrawText ("Magic Piano Vita", 0xff00ff99, 0, 0);
-		SampleDraw.DrawText ("time = " + time, 0xff00ff99, 0, graphics.GetFrameBuffer().Height - 20);
+		// SampleDraw.DrawText ("time = " + time, 0xff00ff99, 0, graphics.GetFrameBuffer().Height - 20);
 
 		graphics.SwapBuffers ();
 
