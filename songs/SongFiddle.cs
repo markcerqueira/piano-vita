@@ -13,10 +13,12 @@ public class SongFiddle {
 	}
 	
 	public static void LoadIntoDictionary(Dictionary<Int32, PianoNote> pianoNoteDictionary) {
-		pianoNoteDictionary.Add(TICKS_PER_BEAT, new PianoNote(TICKS_PER_BEAT, 60)); 
-		pianoNoteDictionary.Add(TicksForBeat(2), new PianoNote(TicksForBeat(2), 55));
-		pianoNoteDictionary.Add(TicksForBeat(3.5), new PianoNote(TicksForBeat(3.5), 60));
-		pianoNoteDictionary.Add(TicksForBeat(4), new PianoNote(TicksForBeat(4), 60));
+		pianoNoteDictionary.Add(TicksForBeat(1), new PianoNote(TicksForBeat(1), 53)); 
+		pianoNoteDictionary.Add(TicksForBeat(1.5), new PianoNote(TicksForBeat(2), 57));
+		pianoNoteDictionary.Add(TicksForBeat(2), new PianoNote(TicksForBeat(3.5), 62));
+		pianoNoteDictionary.Add(TicksForBeat(2.5), new PianoNote(TicksForBeat(4), 60));
+		pianoNoteDictionary.Add(TicksForBeat(3.5), new PianoNote(TicksForBeat(3.5), 55));
+		pianoNoteDictionary.Add(TicksForBeat(4), new PianoNote(TicksForBeat(4), 57));
 	}
 }
 
