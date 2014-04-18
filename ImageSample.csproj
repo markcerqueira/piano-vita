@@ -44,6 +44,7 @@
     <Compile Include="SongLoader.cs" />
     <Compile Include="songs\SongDebug.cs" />
     <Compile Include="songs\SongZelda.cs" />
+    <Compile Include="songs\SongFiddle.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="SampleLib\SampleLib.csproj">

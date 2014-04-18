@@ -118,6 +118,10 @@ public static class ImageSample {
 	
 	private static void RefreshPianoNoteSprites() {
 		SongLoader.RefreshPianoNoteSprites(pianoNoteDictionary, graphics, trollModeEnabled);	
+		
+		foreach (PianoNote note in activeNoteList) {
+			note.soundPlayer = soundPlayerForNote(note.midiValue);
+		}
 	}
 	
     public static void Term() {
