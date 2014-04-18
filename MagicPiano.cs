@@ -101,8 +101,8 @@ public static class MagicPiano {
 		int buttonHeight = 48;
 		int buttonWidth = 200;
 		
-		int SONG_SELECT_BUTTON_POS = 1;
-		int TROLL_BUTTON_POS = 2;
+		int SONG_SELECT_BUTTON_POS = 2;
+		int TROLL_BUTTON_POS = 1;
 		int RESTART_BUTTON_POS = 3;
 		
 		trollButton = new SampleButton(graphicsFrameWidth - buttonWidth * TROLL_BUTTON_POS - (TROLL_BUTTON_POS * 10), graphicsFrameHeight - buttonHeight - 10, buttonWidth, buttonHeight); 
