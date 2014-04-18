@@ -8,8 +8,8 @@
     <ProjectGuid>{741B8085-F498-4231-8F96-D3480CEF5C37}</ProjectGuid>
     <ProjectTypeGuids>{69878862-DA7D-4DC6-B0A1-50D8FAB4242F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ImageSample</RootNamespace>
-    <AssemblyName>ImageSample</AssemblyName>
+    <RootNamespace>MagicPiano</RootNamespace>
+    <AssemblyName>MagicPiano</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,7 +39,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Sce\Sce.Psm.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="ImageSample.cs" />
+    <Compile Include="MagicPiano.cs" />
     <Compile Include="PianoNote.cs" />
     <Compile Include="SongLoader.cs" />
     <Compile Include="songs\SongDebug.cs" />
@@ -198,7 +198,5 @@
     <None Include="notes\c\.DS_Store" />
     <None Include="notes\d\.DS_Store" />
     <None Include="notes\dsharp\.DS_Store" />
-    <None Include="trollnotes\c\.DS_Store" />
-    <None Include="trollnotes\csharp\.DS_Store" />
   </ItemGroup>
 </Project>
