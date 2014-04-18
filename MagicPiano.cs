@@ -28,6 +28,7 @@ public static class MagicPiano {
 	
 	private static SampleButton trollButton;
 	private static SampleButton restartButton;
+	private static SampleButton songSelectButton;
 	
 	private static int graphicsFrameWidth;
 	private static int graphicsFrameHeight;
@@ -37,6 +38,13 @@ public static class MagicPiano {
 	private static bool isRestarting = false;
 	
 	private static bool loop = true;
+	
+	private static readonly String DEBUG_SONG_ID = "debug";
+	private static readonly String ZELDA_SONG_ID = "zelda";
+	private static readonly String FIDDLE_SONG_ID = "fiddle";
+
+	private static int playingSongIndex = 0;
+	private static String[] songsArray = new String[] {ZELDA_SONG_ID, FIDDLE_SONG_ID, DEBUG_SONG_ID};
 	
 	private static String[][] notesarray = new String[][] { 
 		Directory.GetFiles("/Application/notes/c/"),
@@ -91,11 +99,13 @@ public static class MagicPiano {
 		int buttonHeight = 48;
 		int buttonWidth = 200;
 		
+		songSelectButton = new SampleButton(graphicsFrameWidth - buttonWidth - 10, graphicsFrameHeight - buttonHeight * 3 - 30, buttonWidth, buttonHeight); 
+		songSelectButton.SetText(songsArray[0]);
+		
 		restartButton = new SampleButton(graphicsFrameWidth - buttonWidth - 10, graphicsFrameHeight - buttonHeight * 2 - 20, buttonWidth, buttonHeight); 
 		restartButton.SetText("restart");
 		
 		trollButton = new SampleButton(graphicsFrameWidth - buttonWidth - 10, graphicsFrameHeight - buttonHeight - 10, buttonWidth, buttonHeight);
-		
 		RefreshTrollButtonText();
 		
         return true;
@@ -113,7 +123,15 @@ public static class MagicPiano {
 		pianoNoteDictionary.Clear();
 		activeNoteList.Clear();
 		
-		SongLoader.LoadZeldaTheme(pianoNoteDictionary, graphics, trollModeEnabled);
+		String songId = songsArray[playingSongIndex];
+		
+		if(songId.Equals(ZELDA_SONG_ID)) {
+			SongLoader.LoadZeldaSong(pianoNoteDictionary, graphics, trollModeEnabled);
+		} else if (songId.Equals(FIDDLE_SONG_ID)) {
+			SongLoader.LoadFiddleSong(pianoNoteDictionary, graphics, trollModeEnabled);
+		} else {
+			SongLoader.LoadDebugSong(pianoNoteDictionary, graphics, trollModeEnabled);	
+		}
 	}
 	
 	private static void RefreshPianoNoteSprites() {
@@ -199,9 +217,10 @@ public static class MagicPiano {
 			
 		restartButton.Draw();
 		trollButton.Draw();
+		songSelectButton.Draw();
 		
 		SampleDraw.DrawText ("Magic Piano Vita", 0xff00ff99, 0, 0);
-		SampleDraw.DrawText ("time = " + time, 0xff00ff99, 0, graphics.GetFrameBuffer().Height - 50);
+		SampleDraw.DrawText ("time = " + time, 0xff00ff99, 0, graphics.GetFrameBuffer().Height - 20);
 
 		graphics.SwapBuffers ();
 
@@ -215,6 +234,18 @@ public static class MagicPiano {
 		
 		time = 0;
 		isRestarting = false;
+	}
+	
+	private static void ToggleSong() {
+		playingSongIndex++;
+		
+		if(playingSongIndex >= songsArray.Length) {
+			playingSongIndex = 0;
+		}
+		
+		songSelectButton.SetText(songsArray[playingSongIndex]);
+		
+		RestartSong();
 	}
 	
 	public static void HandleTouchEvent() {
@@ -242,6 +273,13 @@ public static class MagicPiano {
 			
 			return;
 		}
+		
+		// if song select button is touched
+		if (songSelectButton.TouchDown(touchDataList)) {
+        	ToggleSong();
+						
+			return;
+        }
 		
 		foreach (var touchData in touchDataList) {
 			// this boolean ensures we don't get multiple notes played per call to Render()

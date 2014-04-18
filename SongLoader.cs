@@ -32,8 +32,14 @@ public class SongLoader {
 		FinishLoadingSongProcess(pianoNoteDictionary, graphics, trollModeEnabled);
 	}
 	
-	public static void LoadZeldaTheme(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {
+	public static void LoadZeldaSong(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {
 		SongZelda.LoadIntoDictionary(pianoNoteDictionary);
+		
+		FinishLoadingSongProcess(pianoNoteDictionary, graphics, trollModeEnabled);
+	}
+	
+	public static void LoadFiddleSong(Dictionary<Int32, PianoNote> pianoNoteDictionary, GraphicsContext graphics, bool trollModeEnabled) {
+		SongFiddle.LoadIntoDictionary(pianoNoteDictionary);
 		
 		FinishLoadingSongProcess(pianoNoteDictionary, graphics, trollModeEnabled);
 	}
