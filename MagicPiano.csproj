@@ -10,6 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>MagicPiano</RootNamespace>
     <AssemblyName>MagicPiano</AssemblyName>
+    <StartupObject>MagicPiano</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -184,6 +185,8 @@
     <Content Include="trollnotes\gsharp\c4.wav" />
     <Content Include="trollnotes\gsharp\c5.wav" />
     <Content Include="trollnotes\gsharp\c6.wav" />
+    <Content Include="icon.png" />
+    <Content Include="line.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

@@ -92,6 +92,8 @@ public static class MagicPiano {
 		SongLoader.PreloadTextures();
 
 		LoadSong();
+		
+		LoadLineTexture();
 				
 		graphicsFrameWidth = graphics.GetFrameBuffer().Width;
 		graphicsFrameHeight = graphics.GetFrameBuffer().Height;
@@ -99,15 +101,19 @@ public static class MagicPiano {
 		int buttonHeight = 48;
 		int buttonWidth = 200;
 		
-		songSelectButton = new SampleButton(graphicsFrameWidth - buttonWidth - 10, graphicsFrameHeight - buttonHeight * 3 - 30, buttonWidth, buttonHeight); 
-		songSelectButton.SetText(songsArray[0]);
+		int SONG_SELECT_BUTTON_POS = 1;
+		int TROLL_BUTTON_POS = 2;
+		int RESTART_BUTTON_POS = 3;
 		
-		restartButton = new SampleButton(graphicsFrameWidth - buttonWidth - 10, graphicsFrameHeight - buttonHeight * 2 - 20, buttonWidth, buttonHeight); 
-		restartButton.SetText("restart");
-		
-		trollButton = new SampleButton(graphicsFrameWidth - buttonWidth - 10, graphicsFrameHeight - buttonHeight - 10, buttonWidth, buttonHeight);
+		trollButton = new SampleButton(graphicsFrameWidth - buttonWidth * TROLL_BUTTON_POS - (TROLL_BUTTON_POS * 10), graphicsFrameHeight - buttonHeight - 10, buttonWidth, buttonHeight); 
 		RefreshTrollButtonText();
 		
+		songSelectButton = new SampleButton(graphicsFrameWidth - buttonWidth * SONG_SELECT_BUTTON_POS - (SONG_SELECT_BUTTON_POS * 10), graphicsFrameHeight - buttonHeight - 10, buttonWidth, buttonHeight); 
+		songSelectButton.SetText(songsArray[0]);
+
+		restartButton = new SampleButton(graphicsFrameWidth - buttonWidth * RESTART_BUTTON_POS - (RESTART_BUTTON_POS * 10), graphicsFrameHeight - buttonHeight - 10, buttonWidth, buttonHeight);
+		restartButton.SetText("restart");
+
         return true;
     }
 	
@@ -155,6 +161,19 @@ public static class MagicPiano {
 		
         return true;
     }
+	
+	private static SampleSprite lineSprite;
+	private static void LoadLineTexture() {
+		var image = new Image("/Application/line.png");
+        image.Decode();
+					
+		var texture = new Texture2D(image.Size.Width, image.Size.Height, false, PixelFormat.Rgba);
+        texture.SetPixels(0, image.ToBuffer());
+			
+        image.Dispose();
+		
+		lineSprite = new SampleSprite(texture, 0, PAUSE_HORIZON + 100, 0f, 1.0f);
+	}
 			
 	private static int time = 0;
 	private static int SPEED = 2;
@@ -164,6 +183,8 @@ public static class MagicPiano {
 		graphics.SetViewport (0, 0, graphics.GetFrameBuffer ().Width, graphics.GetFrameBuffer ().Height);
 		graphics.SetClearColor (0.0f, 0.0f, 0.0f, 0.0f);
 		graphics.Clear ();
+		
+		SampleDraw.DrawSprite(lineSprite);
 		
 		// if we're "restarting" stop here
 		if(isRestarting) {
@@ -210,7 +231,7 @@ public static class MagicPiano {
 			
 			i++;
 		}
-		
+				
 		RemoveOffScreenNotes();	
 		
 		HandleTouchEvent();

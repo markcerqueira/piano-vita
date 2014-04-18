@@ -68,7 +68,7 @@ public class SongLoader {
 		foreach(PianoNote pianoNote in pianoNoteDictionary.Values) {
 			// calculate all x position values now
 			float graphicsFrameWidth = graphics.GetFrameBuffer().Width;
-			pianoNote.xPos = (int)(((float)pianoNote.midiValue / 127.0f) * graphicsFrameWidth);
+			pianoNote.xPos = (int)(((float)pianoNote.midiValue / 120.0f) * graphicsFrameWidth);
 			
 			// create sprites
 			RefreshPianoNoteSprites(pianoNoteDictionary, graphics, trollModeEnabled);
