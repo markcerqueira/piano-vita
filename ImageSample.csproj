@@ -111,7 +111,6 @@
     <Content Include="notes\g\g4h.wav" />
     <Content Include="notes\g\g5h.wav" />
     <Content Include="notes\g\g6h.wav" />
-    <Content Include="notes\g\g6s.wav" />
     <Content Include="notes\gsharp\g2h.wav" />
     <Content Include="notes\gsharp\g3h.wav" />
     <Content Include="notes\gsharp\g4h.wav" />
@@ -122,10 +121,71 @@
     <Content Include="images\troll\Face_Mark.png" />
     <Content Include="images\troll\Face_Mo.png" />
     <Content Include="images\troll\Face_Oscar.png" />
+    <Content Include="trollnotes\a\c2.wav" />
+    <Content Include="trollnotes\a\c3.wav" />
+    <Content Include="trollnotes\a\c4.wav" />
+    <Content Include="trollnotes\a\c5.wav" />
+    <Content Include="trollnotes\a\c6.wav" />
+    <Content Include="trollnotes\asharp\c2.wav" />
+    <Content Include="trollnotes\asharp\c3.wav" />
+    <Content Include="trollnotes\asharp\c4.wav" />
+    <Content Include="trollnotes\asharp\c5.wav" />
+    <Content Include="trollnotes\asharp\c6.wav" />
+    <Content Include="trollnotes\b\c2.wav" />
+    <Content Include="trollnotes\b\c3.wav" />
+    <Content Include="trollnotes\b\c4.wav" />
+    <Content Include="trollnotes\b\c5.wav" />
+    <Content Include="trollnotes\b\c6.wav" />
+    <Content Include="trollnotes\c\c2.wav" />
+    <Content Include="trollnotes\c\c3.wav" />
+    <Content Include="trollnotes\c\c4.wav" />
+    <Content Include="trollnotes\c\c5.wav" />
+    <Content Include="trollnotes\c\c6.wav" />
+    <Content Include="trollnotes\csharp\c2.wav" />
+    <Content Include="trollnotes\csharp\c3.wav" />
+    <Content Include="trollnotes\csharp\c4.wav" />
+    <Content Include="trollnotes\csharp\c5.wav" />
+    <Content Include="trollnotes\csharp\c6.wav" />
+    <Content Include="trollnotes\d\c2.wav" />
+    <Content Include="trollnotes\d\c3.wav" />
+    <Content Include="trollnotes\d\c4.wav" />
+    <Content Include="trollnotes\d\c5.wav" />
+    <Content Include="trollnotes\d\c6.wav" />
+    <Content Include="trollnotes\dsharp\c2.wav" />
+    <Content Include="trollnotes\dsharp\c3.wav" />
+    <Content Include="trollnotes\dsharp\c4.wav" />
+    <Content Include="trollnotes\dsharp\c5.wav" />
+    <Content Include="trollnotes\dsharp\c6.wav" />
+    <Content Include="trollnotes\e\c2.wav" />
+    <Content Include="trollnotes\e\c3.wav" />
+    <Content Include="trollnotes\e\c4.wav" />
+    <Content Include="trollnotes\e\c5.wav" />
+    <Content Include="trollnotes\e\c6.wav" />
+    <Content Include="trollnotes\f\c2.wav" />
+    <Content Include="trollnotes\f\c3.wav" />
+    <Content Include="trollnotes\f\c4.wav" />
+    <Content Include="trollnotes\f\c5.wav" />
+    <Content Include="trollnotes\f\c6.wav" />
+    <Content Include="trollnotes\fsharp\c2.wav" />
+    <Content Include="trollnotes\fsharp\c3.wav" />
+    <Content Include="trollnotes\fsharp\c4.wav" />
+    <Content Include="trollnotes\fsharp\c5.wav" />
+    <Content Include="trollnotes\fsharp\c6.wav" />
+    <Content Include="trollnotes\g\c2.wav" />
+    <Content Include="trollnotes\g\c3.wav" />
+    <Content Include="trollnotes\g\c4.wav" />
+    <Content Include="trollnotes\g\c5.wav" />
+    <Content Include="trollnotes\g\c6.wav" />
+    <Content Include="trollnotes\gsharp\c2.wav" />
+    <Content Include="trollnotes\gsharp\c3.wav" />
+    <Content Include="trollnotes\gsharp\c4.wav" />
+    <Content Include="trollnotes\gsharp\c5.wav" />
+    <Content Include="trollnotes\gsharp\c6.wav" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
     <Folder Include="notes\" />
+    <Folder Include="trollnotes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="notes\.DS_Store" />
@@ -134,5 +194,7 @@
     <None Include="notes\c\.DS_Store" />
     <None Include="notes\d\.DS_Store" />
     <None Include="notes\dsharp\.DS_Store" />
+    <None Include="trollnotes\c\.DS_Store" />
+    <None Include="trollnotes\csharp\.DS_Store" />
   </ItemGroup>
 </Project>

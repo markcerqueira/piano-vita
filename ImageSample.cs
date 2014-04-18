@@ -52,6 +52,20 @@ public static class ImageSample {
 		Directory.GetFiles("/Application/notes/asharp/"),
 		Directory.GetFiles("/Application/notes/b/")};
 	
+	private static String[][] trollnotesarray = new String[][] { 
+		Directory.GetFiles("/Application/trollnotes/c/"),
+		Directory.GetFiles("/Application/trollnotes/csharp/"),
+		Directory.GetFiles("/Application/trollnotes/d/"),
+		Directory.GetFiles("/Application/trollnotes/dsharp/"),
+		Directory.GetFiles("/Application/trollnotes/e/"),
+		Directory.GetFiles("/Application/trollnotes/f/"),
+		Directory.GetFiles("/Application/trollnotes/fsharp/"),
+		Directory.GetFiles("/Application/trollnotes/g/"),
+		Directory.GetFiles("/Application/trollnotes/gsharp/"),
+		Directory.GetFiles("/Application/trollnotes/a/"),
+		Directory.GetFiles("/Application/trollnotes/asharp/"),
+		Directory.GetFiles("/Application/trollnotes/b/")};
+	
     public static void Main(string[] args) {
         Init();
 
@@ -276,7 +290,14 @@ public static class ImageSample {
 		int octave = (int) (note / 12.0);
 		int interval = (int) (note % 12.0);
 		Console.Write("octave: " + octave + " interval: " + interval / 2 + "\n");
-		var note_filepath = notesarray[interval][octave - 2];
+		
+		var note_filepath = "";
+		
+		if (trollModeEnabled) {
+			note_filepath = trollnotesarray[interval][octave - 2];
+		} else {
+			note_filepath = notesarray[interval][octave - 2];
+		}
 			
 		return (new Sound(note_filepath)).CreatePlayer();
 	}
