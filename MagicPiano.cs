@@ -19,7 +19,7 @@ using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 using System.IO;
 using Sample;
 
-public static class ImageSample {
+public static class MagicPiano {
     private static GraphicsContext graphics = new GraphicsContext();
 	
 	private static Dictionary<Int32, PianoNote> pianoNoteDictionary = new Dictionary<Int32, PianoNote>();
