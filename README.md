@@ -1,4 +1,4 @@
-## piano-vita
+# piano-vita
 ==========
 
 Magic Piano Prototype for the Playstation Vita!
